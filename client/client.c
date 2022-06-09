@@ -12,13 +12,7 @@
 
 #include "../minitalk.h"
 
-void	send_sig(pid_t pid, int signo)
-{
-	kill(pid, signo);
-	usleep(30);
-}
-
-void	set_sig(int pid, char *str, int length)
+void	send_sig(int pid, char *str, int length)
 {
 	int	byte_index;
 	int	bit_index;
@@ -32,9 +26,10 @@ void	set_sig(int pid, char *str, int length)
 		{
 			bit_temp = str[byte_index] >> (7 - bit_index) & 1;
 			if (bit_temp == 0)
-				send_sig(pid, SIGUSR1);
+				kill(pid, SIGUSR1);
 			else if (bit_temp == 1)
-				send_sig(pid, SIGUSR2);
+				kill(pid, SIGUSR2);
+			usleep(30);
 			bit_index++;
 		}
 		usleep(300);
@@ -49,7 +44,7 @@ void	get_str(int pid, char *str)
 
 	send = ft_strjoin(str, "\n");
 	length = ft_strlen(send);
-	set_sig(pid, send, length);
+	send_sig(pid, send, length);
 	free(send);
 	exit(0);
 }
@@ -64,7 +59,7 @@ int	main(int argc, char *argv[])
 		exit(1);
 	}
 	pid = ft_atoi(argv[1]);
-	if (pid < 101 || pid > 99999)
+	if (pid < 100 || pid > 99998)
 	{
 		ft_putstr_fd("Invalid PID...\n", 1);
 		exit(1);
