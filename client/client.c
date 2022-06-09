@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: donchoi <donchoi@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: donchoi <donchoi.student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 18:23:20 by donchoi           #+#    #+#             */
-/*   Updated: 2022/06/02 18:23:20 by donchoi          ###   ########.fr       */
+/*   Updated: 2022/06/09 17:30:41 by donchoi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	get_str(int pid, char *str)
 	char	*send;
 
 	send = ft_strjoin(str, "\n");
+	if (send == NULL)
+		exit(1);
 	length = ft_strlen(send);
 	send_sig(pid, send, length);
 	free(send);
